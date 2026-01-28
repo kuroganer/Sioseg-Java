@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout/base :: html}">
+<head>
+    <th:block th:fragment="css">
+        <style>
+            .dashboard-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+                gap: 25px;
+                margin: 30px 0;
+            }
+            
+            .dashboard-card {
+                background: var(--card-bg-color);
+                border-radius: 12px;
+                padding: 25px;
+                box-shadow: 0 4px 12px var(--shadow-color);
+                transition: all 0.3s ease;
+                border: 1px solid var(--border-color);
+                text-decoration: none;
+                color: var(--text-color);
+            }
+            
+            .dashboard-card:hover {
+                transform: translateY(-4px);
+                box-shadow: 0 8px 25px var(--shadow-color);
+                text-decoration: none;
+                color: var(--text-color);
+            }
+            
+            .card-icon {
+                font-size: 2.5rem;
+                color: var(--primary-color);
+                margin-bottom: 15px;
+                display: block;
+            }
+            
+            .card-title {
+                font-size: 1.3rem;
+                font-weight: 600;
+                margin-bottom: 10px;
+                color: var(--text-color);
+            }
+            
+            .card-description {
+                color: var(--label-color);
+                font-size: 0.95rem;
+                line-height: 1.4;
+            }
+            
+            .welcome-section {
+                background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+                color: white;
+                padding: 25px;
+                border-radius: 12px;
+                margin-bottom: 30px;
+                text-align: center;
+            }
+            
+            .welcome-title {
+                font-size: 1.8rem;
+                margin-bottom: 10px;
+                font-weight: 700;
+            }
+            
+            .welcome-info {
+                font-size: 1rem;
+                opacity: 0.9;
+            }
+            
+            .page-title {
+                font-size: 2.2rem;
+                font-weight: 700;
+                color: var(--text-color);
+                text-align: center;
+                margin-bottom: 20px;
+            }
+        </style>
+    </th:block>
+</head>
+<body>
+    <th:block th:fragment="content">
+        <h1 class="page-title">Dashboard</h1>
+        
+        <div class="welcome-section">
+            <h2 class="welcome-title">Bem-vindo ao SIOSeG!</h2>
+            <div class="welcome-info">
+                <p><strong>Usuário:</strong> <span th:text="${#authentication.name}">admin@gmail.com</span></p>
+                <p><strong>Perfil:</strong> <span th:text="${#authentication.authorities[0].authority}">ADMIN</span></p>
+            </div>
+        </div>
+        
+        <div class="dashboard-grid">
+            <a href="/admin/clientes" class="dashboard-card">
+                <i class="fas fa-users card-icon"></i>
+                <h3 class="card-title">Clientes</h3>
+                <p class="card-description">Gerenciar cadastro de clientes, visualizar informações e histórico de serviços</p>
+            </a>
+            
+            <a href="/admin/produtos" class="dashboard-card">
+                <i class="fas fa-box card-icon"></i>
+                <h3 class="card-title">Produtos</h3>
+                <p class="card-description">Controlar estoque, cadastrar novos produtos e gerenciar preços</p>
+            </a>
+            
+            <a href="/admin/os" class="dashboard-card">
+                <i class="fas fa-clipboard-list card-icon"></i>
+                <h3 class="card-title">Ordens de Serviço</h3>
+                <p class="card-description">Criar, acompanhar e gerenciar ordens de serviço do sistema</p>
+            </a>
+            
+            <a href="/test-users" class="dashboard-card">
+                <i class="fas fa-database card-icon"></i>
+                <h3 class="card-title">Usuários do Sistema</h3>
+                <p class="card-description">Visualizar e gerenciar usuários cadastrados no banco de dados</p>
+            </a>
+        </div>
+    </th:block>
+</body>
+</html>

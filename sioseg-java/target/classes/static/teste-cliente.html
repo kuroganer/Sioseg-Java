@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Teste Formulário Cliente</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .error { color: red; }
+        .success { color: green; }
+        .form-section { margin: 20px 0; padding: 15px; border: 1px solid #ddd; }
+        .form-group { margin: 10px 0; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; }
+        input, select { width: 100%; padding: 8px; margin-bottom: 10px; }
+        button { padding: 10px 20px; background: #007bff; color: white; border: none; cursor: pointer; }
+        .hidden { display: none; }
+        .progress-bar { width: 100%; height: 20px; background: #f0f0f0; margin: 10px 0; }
+        .progress-bar-inner { height: 100%; background: #007bff; width: 0%; transition: width 0.3s; }
+    </style>
+</head>
+<body>
+    <h1>Teste - Formulário de Cliente</h1>
+    
+    <div class="progress-bar">
+        <div class="progress-bar-inner" id="progress-bar"></div>
+    </div>
+    
+    <form>
+        <div class="form-section">
+            <h3>1. Identificação</h3>
+            <div class="form-group">
+                <label for="tipo_pessoa">Tipo de Pessoa:</label>
+                <select id="tipo_pessoa" name="tipoPessoa" required>
+                    <option value="">Selecione</option>
+                    <option value="fisica">Física</option>
+                    <option value="juridica">Jurídica</option>
+                </select>
+            </div>
+        </div>
+        
+        <div id="main-form-content" class="hidden">
+            <div class="form-section hidden" id="fisica_fields">
+                <h3>2. Dados Pessoais</h3>
+                <div class="form-group">
+                    <label for="nomeCli">Nome Completo *</label>
+                    <input type="text" id="nomeCli" name="nomeCli" />
+                </div>
+                <div class="form-group">
+                    <label for="cpfCli">CPF *</label>
+                    <input type="text" id="cpfCli" name="cpfCli" />
+                </div>
+            </div>
+            
+            <div class="form-section hidden" id="juridica_fields">
+                <h3>2. Dados Empresariais</h3>
+                <div class="form-group">
+                    <label for="razaoSocial">Razão Social *</label>
+                    <input type="text" id="razaoSocial" name="razaoSocial" />
+                </div>
+                <div class="form-group">
+                    <label for="cnpj">CNPJ *</label>
+                    <input type="text" id="cnpj" name="cnpj" />
+                </div>
+            </div>
+            
+            <div class="form-section">
+                <h3>3. Contato</h3>
+                <div class="form-group">
+                    <label for="emailCli">Email *</label>
+                    <input type="email" id="emailCli" name="emailCli" required />
+                </div>
+                <div class="form-group">
+                    <label for="tel1Cli">Telefone Principal *</label>
+                    <input type="tel" id="tel1Cli" name="tel1Cli" required />
+                </div>
+                <div class="form-group">
+                    <label for="senha">Senha *</label>
+                    <input type="password" id="senha" name="senha" required />
+                </div>
+                <div class="form-group">
+                    <label for="confirmarSenha">Confirmar Senha *</label>
+                    <input type="password" id="confirmarSenha" name="confirmarSenha" required />
+                    <div id="password-feedback"></div>
+                </div>
+            </div>
+            
+            <div class="form-section">
+                <h3>4. Endereço</h3>
+                <div class="form-group">
+                    <label for="cep">CEP</label>
+                    <input type="text" id="cep" name="cep" />
+                    <span id="cep-loading" style="display: none;">Buscando CEP...</span>
+                </div>
+                <div class="form-group">
+                    <label for="logradouro">Logradouro *</label>
+                    <input type="text" id="logradouro" name="logradouro" required />
+                </div>
+                <div class="form-group">
+                    <label for="numEnd">Número *</label>
+                    <input type="text" id="numEnd" name="numEnd" required />
+                </div>
+                <div class="form-group">
+                    <label for="bairro">Bairro *</label>
+                    <input type="text" id="bairro" name="bairro" required />
+                </div>
+                <div class="form-group">
+                    <label for="cidade">Cidade *</label>
+                    <input type="text" id="cidade" name="cidade" required />
+                </div>
+                <div class="form-group">
+                    <label for="uf">UF *</label>
+                    <input type="text" id="uf" name="uf" required maxlength="2" />
+                </div>
+                <div class="form-group">
+                    <label for="complemento">Complemento</label>
+                    <input type="text" id="complemento" name="complemento" />
+                </div>
+                <div class="form-group">
+                    <label for="endereco">Endereço Completo (Automático) *</label>
+                    <input type="text" id="endereco" name="endereco" readonly required />
+                </div>
+            </div>
+            
+            <button type="submit">Cadastrar Cliente</button>
+        </div>
+    </form>
+    
+    <script>
+        // Incluir o script do cliente aqui para teste
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Teste iniciado');
+            
+            // Simular o comportamento do script original
+            const tipoSelect = document.getElementById('tipo_pessoa');
+            const mainFormContent = document.getElementById('main-form-content');
+            const fisicaFields = document.getElementById('fisica_fields');
+            const juridicaFields = document.getElementById('juridica_fields');
+            
+            function toggleFields() {
+                console.log('toggleFields - valor selecionado:', tipoSelect.value);
+                
+                if (tipoSelect.value) {
+                    mainFormContent.classList.remove('hidden');
+                } else {
+                    mainFormContent.classList.add('hidden');
+                }
+                
+                if (tipoSelect.value === 'fisica') {
+                    fisicaFields.classList.remove('hidden');
+                    juridicaFields.classList.add('hidden');
+                } else if (tipoSelect.value === 'juridica') {
+                    fisicaFields.classList.add('hidden');
+                    juridicaFields.classList.remove('hidden');
+                } else {
+                    fisicaFields.classList.add('hidden');
+                    juridicaFields.classList.add('hidden');
+                }
+            }
+            
+            tipoSelect.addEventListener('change', toggleFields);
+            
+            // Teste de CEP
+            const cepInput = document.getElementById('cep');
+            cepInput.addEventListener('blur', function() {
+                const cep = this.value.replace(/\D/g, '');
+                console.log('CEP testado:', cep);
+                if (cep === '01310100') {
+                    // Simular resposta da API
+                    document.getElementById('logradouro').value = 'Avenida Paulista';
+                    document.getElementById('bairro').value = 'Bela Vista';
+                    document.getElementById('cidade').value = 'São Paulo';
+                    document.getElementById('uf').value = 'SP';
+                    console.log('CEP simulado preenchido');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

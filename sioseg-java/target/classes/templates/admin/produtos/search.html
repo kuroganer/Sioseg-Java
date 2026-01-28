@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout/base :: html}">
+<head>
+    <th:block th:fragment="css">
+        <link rel="stylesheet" th:href="@{/css/tables.css}" />
+        <style>
+            .search-form {
+                background: var(--card-bg-color);
+                padding: 20px;
+                border-radius: 8px;
+                margin-bottom: 20px;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            }
+            .search-input {
+                flex: 1;
+                padding: 12px;
+                border: 1px solid var(--border-color);
+                border-radius: 6px;
+                font-size: 14px;
+            }
+            .search-btn {
+                padding: 12px 20px;
+                background: var(--primary-color);
+                color: white;
+                border: none;
+                border-radius: 6px;
+                cursor: pointer;
+                font-weight: 600;
+            }
+        </style>
+    </th:block>
+</head>
+<body>
+    <th:block th:fragment="content">
+        <div class="table-system">
+            <div class="table-system__header">
+                <h1 class="table-system__title">Pesquisar Produtos</h1>
+            </div>
+            
+            <div class="search-form">
+                <form method="get" style="display: flex; gap: 10px; align-items: center;">
+                    <input type="text" name="nome" th:value="${searchTerm}" 
+                           placeholder="Digite o nome, marca ou modelo do produto..."
+                           class="search-input" />
+                    <button type="submit" class="search-btn">
+                        <i class="fas fa-search"></i> Pesquisar
+                    </button>
+                </form>
+            </div>
+            
+            <div th:if="${produtos != null and !produtos.empty}">
+                <div class="table-system__wrapper">
+                    <table class="table-system__table">
+                        <thead>
+                            <tr>
+                                <th class="table-system__header-cell">ID</th>
+                                <th class="table-system__header-cell">Nome</th>
+                                <th class="table-system__header-cell">Marca</th>
+                                <th class="table-system__header-cell">Modelo</th>
+                                <th class="table-system__header-cell">Quantidade</th>
+                                <th class="table-system__header-cell">Status</th>
+                                <th class="table-system__header-cell">Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="produto : ${produtos}" class="table-system__row" 
+                                th:classappend="${produto.status == 'inativo'} ? 'status-inativo' : ''">
+                                <td class="table-system__cell" th:text="${produto.idProd}">1</td>
+                                <td class="table-system__cell" th:text="${produto.nome}">Nome</td>
+                                <td class="table-system__cell" th:text="${produto.marca ?: '—'}">Marca</td>
+                                <td class="table-system__cell" th:text="${produto.modelo ?: '—'}">Modelo</td>
+                                <td class="table-system__cell table-system__cell--numeric" th:text="${produto.qtde}">10</td>
+                                <td class="table-system__cell">
+                                    <span class="table-system__badge" 
+                                          th:classappend="${produto.status == 'ativo'} ? 'table-system__badge--success' : 'table-system__badge--error'"
+                                          th:text="${produto.status}">Ativo</span>
+                                </td>
+                                <td class="table-system__cell">
+                                    <div class="table-system__actions">
+                                        <a th:href="@{/admin/produtos/edit/{id}(id=${produto.idProd})}" 
+                                           class="table-system__btn table-system__btn--primary">
+                                            <i class="fas fa-edit"></i> Editar
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <div th:if="${searchTerm != null and (produtos == null or produtos.empty)}" 
+                 style="text-align: center; padding: 40px; color: var(--label-color);">
+                <i class="fas fa-search" style="font-size: 3rem; margin-bottom: 15px; opacity: 0.5;"></i>
+                <p>Nenhum produto encontrado para "<strong th:text="${searchTerm}"></strong>"</p>
+            </div>
+            
+            <div th:if="${searchTerm == null}" 
+                 style="text-align: center; padding: 40px; color: var(--label-color);">
+                <i class="fas fa-box" style="font-size: 3rem; margin-bottom: 15px; opacity: 0.5;"></i>
+                <p>Digite um termo para pesquisar produtos</p>
+            </div>
+        </div>
+    </th:block>
+</body>
+</html>

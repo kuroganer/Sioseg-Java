@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login Debug</title>
+</head>
+<body>
+    <h1>LOGIN DEBUG</h1>
+    <form method="post" action="/login">
+        <p>Email: <input name="email" type="text" value="admin@gmail.com"></p>
+        <p>Senha: <input name="senha" type="password" value="123456"></p>
+        <p><button type="submit">LOGIN</button></p>
+    </form>
+    
+    <script>
+        document.querySelector('form').addEventListener('submit', function(e) {
+            console.log('Formulário enviado!');
+            console.log('Email:', document.querySelector('[name="email"]').value);
+            console.log('Senha:', document.querySelector('[name="senha"]').value);
+        });
+    </script>
+</body>
+</html>

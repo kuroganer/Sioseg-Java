@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout/base :: layout(~{::title}, ~{::content})}">
+<head>
+    <title>Nova OS - SIOSeG</title>
+</head>
+<body>
+    <th:block th:fragment="content">
+        <div class="form-container">
+            <div class="form-sidebar">
+                <div class="sidebar-header">
+                    <h2 class="sidebar-title">Cadastro de OS</h2>
+                </div>
+            </div>
+            
+            <div class="form-main">
+                <div class="progress-bar"><div class="progress-bar-inner" id="progress-bar"></div></div>
+                
+                <div th:if="${sucesso}" class="success-message" th:text="${sucesso}"></div>
+                <div th:if="${erro}" class="error-message" th:text="${erro}"></div>
+                
+                <form action="/admin/os/salvar" method="post">
+                    
+                    <div class="form-section">
+                        <h3 class="form-section-title">1. Informações do Serviço</h3>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="tipoServico">Tipo de Serviço *</label>
+                                <div class="input-group">
+                                    <i class="fa-solid fa-cog input-icon"></i>
+                                    <select id="tipoServico" name="tipoServico" required>
+                                        <option value="">Selecione</option>
+                                        <option value="instalacao">Instalação</option>
+                                        <option value="manutencao">Manutenção</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="status">Status *</label>
+                                <div class="input-group">
+                                    <i class="fa-solid fa-info-circle input-icon"></i>
+                                    <select id="status" name="status" required>
+                                        <option value="">Selecione</option>
+                                        <option value="aberta">Aberta</option>
+                                        <option value="em andamento">Em andamento</option>
+                                        <option value="encerrada">Encerrada</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-section">
+                        <h3 class="form-section-title">2. Datas</h3>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="dataAgendamento">Data de Agendamento *</label>
+                                <div class="input-group">
+                                    <i class="fa-solid fa-calendar input-icon"></i>
+                                    <input type="datetime-local" id="dataAgendamento" name="dataAgendamento" required />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="dataEncerramento">Data de Encerramento</label>
+                                <div class="input-group">
+                                    <i class="fa-solid fa-calendar-check input-icon"></i>
+                                    <input type="datetime-local" id="dataEncerramento" name="dataEncerramento" />
+                                </div>
+                            </div>
+                        </div>
+                        <p class="muted">A <strong>Data de Abertura</strong> será gerada automaticamente pelo sistema no momento do cadastro.</p>
+                    </div>
+                    
+                    <div class="form-section">
+                        <h3 class="form-section-title">3. Responsáveis</h3>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="clienteInput">Cliente (digite nome ou CPF/CNPJ) *</label>
+                                <div class="input-group">
+                                    <i class="fa-solid fa-user input-icon"></i>
+                                    <input type="text" id="clienteInput" list="clientesList" placeholder="Digite nome ou CPF/CNPJ..." required />
+                                    <input type="hidden" id="idCliFk" name="idCliFk" required />
+                                    <datalist id="clientesList">
+                                        <!-- Opções carregadas via JavaScript -->
+                                    </datalist>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="idTecFk">Técnico *</label>
+                                <div class="input-group">
+                                    <i class="fa-solid fa-user-tie input-icon"></i>
+                                    <select id="idTecFk" name="idTecFk" required>
+                                        <option value="">Selecione o técnico</option>
+                                        <!-- Opções carregadas via JavaScript -->
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="usuarioResponsavelDisplay">Usuário responsável *</label>
+                                <div class="input-group">
+                                    <i class="fa-solid fa-user-shield input-icon"></i>
+                                    <input type="text" id="usuarioResponsavelDisplay" value="admin@gmail.com" readonly style="background-color: #f8f9fa; cursor: not-allowed;" />
+                                    <input type="hidden" id="idUsuFk" name="idUsuFk" value="2" required />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-section">
+                        <h3 class="form-section-title">4. Materiais/Produtos</h3>
+                        <div id="materiaisContainer">
+                            <div class="material-item">
+                                <div class="form-row">
+                                    <div class="form-group" style="flex: 2;">
+                                        <label for="produto1">Produto:</label>
+                                        <div class="input-group">
+                                            <i class="fa-solid fa-box input-icon"></i>
+                                            <select id="produto1" name="produtos[1][idProd]">
+                                                <option value="">Selecione um produto</option>
+                                                <!-- Opções carregadas via JavaScript -->
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="quantidade1">Quantidade:</label>
+                                        <div class="input-group">
+                                            <i class="fa-solid fa-hashtag input-icon"></i>
+                                            <input type="number" id="quantidade1" name="produtos[1][quantidade]" min="1" value="1" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>&nbsp;</label>
+                                        <button type="button" class="btn-add-material" onclick="adicionarMaterial()">
+                                            <i class="fa-solid fa-plus"></i> Adicionar
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div id="materiaisAdicionados" class="materiais-list" style="display: none;">
+                            <h4>Materiais Adicionados:</h4>
+                            <div id="materiaisListContent"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-section">
+                        <h3 class="form-section-title">5. Observações</h3>
+                        <div class="form-row">
+                            <div class="form-group" style="flex: 1;">
+                                <label for="servicoPrestado">Serviço Prestado / Observações:</label>
+                                <div class="input-group">
+                                    <i class="fa-solid fa-tools input-icon"></i>
+                                    <textarea id="servicoPrestado" name="servicoPrestado" rows="4" placeholder="Descreva o serviço prestado..."></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-section">
+                        <button type="submit">Cadastrar OS</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <script th:src="@{/js/os_register_form.js}"></script>
+        <script th:src="@{/js/os-form-validation.js}"></script>
+    </th:block>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout/base :: html}">
+<head>
+    <th:block th:fragment="css">
+        <link rel="stylesheet" th:href="@{/css/dashboard.css}" />
+    </th:block>
+</head>
+<body>
+    <th:block th:fragment="content">
+        <div class="page-header">
+            <h1>Resumo Geral</h1>
+            <a href="/admin/relatorios" class="btn btn-secondary">
+                <i class="fas fa-arrow-left"></i> Voltar
+            </a>
+        </div>
+        
+        <div class="stats-grid">
+            <div class="stat-card">
+                <h3>OS Abertas</h3>
+                <div class="stat-number">5</div>
+            </div>
+            
+            <div class="stat-card">
+                <h3>OS Concluídas</h3>
+                <div class="stat-number">12</div>
+            </div>
+            
+            <div class="stat-card">
+                <h3>Em Andamento</h3>
+                <div class="stat-number">8</div>
+            </div>
+            
+            <div class="stat-card">
+                <h3>Avaliações Pendentes</h3>
+                <div class="stat-number">3</div>
+            </div>
+        </div>
+    </th:block>
+</body>
+</html>

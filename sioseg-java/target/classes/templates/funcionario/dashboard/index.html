@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout/base :: html}">
+<head>
+    <th:block th:fragment="css">
+        <link rel="stylesheet" th:href="@{/css/dashboard.css}" />
+        <link rel="stylesheet" th:href="@{/css/admin-dashboard.css}" />
+    </th:block>
+</head>
+<body>
+    <th:block th:fragment="content">
+        <div class="dashboard-container">
+            <header class="dashboard-header">
+                <div class="welcome-message">
+                    <h2>Olá Funcionário, bem-vindo ao SIOSEG!</h2>
+                    <p>Aqui está um resumo do sistema.</p>
+                </div>
+            </header>
+            
+            <hr class="header-divider">
+            
+            <div class="dashboard-grid">
+                <!-- Coluna da Esquerda -->
+                <div class="grid-column">
+                    <!-- Quadro 1: Resumo Geral -->
+                    <div class="dashboard-card">
+                        <h2 class="card-title">Resumo Geral</h2>
+                        <div class="chart-container">
+                            <canvas id="overviewPieChart"></canvas>
+                        </div>
+                    </div>
+                    
+                    <!-- Quadro 3: Relatórios e Análise -->
+                    <div class="dashboard-card">
+                        <h2 class="card-title">Média de Avaliações (Últimos 7 dias)</h2>
+                        <div class="chart-container">
+                            <canvas id="ratingsChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Coluna da Direita -->
+                <div class="grid-column">
+                    <!-- Quadro 2: Gerenciamento de OS -->
+                    <div class="dashboard-card card-large">
+                        <h2 class="card-title">Gerenciamento Rápido de OS</h2>
+                        <div class="kanban-board">
+                            <div class="kanban-column">
+                                <div class="column-header">A Fazer</div>
+                                <div class="task-list" id="todo-tasks">
+                                    <div class="kanban-task" draggable="true">
+                                        <h4>OS #1</h4>
+                                        <p>Cliente: Exemplo</p>
+                                        <span class="task-assigned">Téc: João</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="kanban-column">
+                                <div class="column-header">Em Andamento</div>
+                                <div class="task-list" id="doing-tasks">
+                                    <div class="kanban-task" draggable="true">
+                                        <h4>OS #2</h4>
+                                        <p>Cliente: Teste</p>
+                                        <span class="task-assigned">Téc: Maria</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="kanban-column">
+                                <div class="column-header">Concluído</div>
+                                <div class="task-list" id="done-tasks">
+                                    <div class="kanban-task" draggable="true">
+                                        <h4>OS #3</h4>
+                                        <p>Cliente: Demo</p>
+                                        <span class="task-assigned">Téc: Pedro</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Quadro 4: Top Técnicos -->
+                    <div class="dashboard-card">
+                        <h2 class="card-title">Top 3 Técnicos por Avaliação</h2>
+                        <ul class="ranking-list">
+                            <li style="text-align: center; color: var(--text-color); font-style: italic; padding: 20px 0;">
+                                Nenhuma avaliação disponível
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Scripts específicos do Dashboard -->
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script th:src="@{/js/admin-dashboard.js}"></script>
+        <script>
+            // Dados simulados para os gráficos
+            window.chartLabels = ['D-6', 'D-5', 'D-4', 'D-3', 'D-2', 'Ontem', 'Hoje'];
+            window.chartData = [3, 4, 2, 5, 3, 4, 4];
+            
+            window.pieChartData = {
+                abertas: 5,
+                concluidas: 12,
+                andamento: 8,
+                avaliacoes: 3
+            };
+            
+            const BASE_URL = '/';
+        </script>
+    </th:block>
+</body>
+</html>

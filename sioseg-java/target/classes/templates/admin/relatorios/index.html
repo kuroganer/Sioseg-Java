@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout/base :: html}">
+<head>
+    <th:block th:fragment="css">
+        <link rel="stylesheet" th:href="@{/css/dashboard.css}" />
+    </th:block>
+</head>
+<body>
+    <th:block th:fragment="content">
+        <div class="page-header">
+            <h1>Relatórios</h1>
+        </div>
+        
+        <div class="reports-grid">
+            <div class="report-card">
+                <h3>Resumo Geral</h3>
+                <p>Visão geral das ordens de serviço</p>
+                <a href="/admin/relatorios/resumo-geral" class="btn btn-primary">Ver Relatório</a>
+            </div>
+            
+            <div class="report-card">
+                <h3>Performance dos Técnicos</h3>
+                <p>Análise de desempenho da equipe</p>
+                <a href="/admin/relatorios/performance-tecnicos" class="btn btn-primary">Ver Relatório</a>
+            </div>
+        </div>
+    </th:block>
+</body>
+</html>

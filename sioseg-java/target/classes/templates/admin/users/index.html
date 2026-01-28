@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerenciar Usuários - SIOSeG</title>
+    <link rel="stylesheet" href="/css/globals.css">
+    <link rel="stylesheet" href="/css/layout.css">
+    <link rel="stylesheet" href="/css/forms.css">
+    <link rel="stylesheet" href="/css/tables.css">
+</head>
+<body>
+    <div class="list-container">
+        <h2>Lista de Usuários</h2>
+
+        <div th:if="${sucesso}" class="success-message" th:text="${sucesso}"></div>
+        <div th:if="${erro}" class="error-message" th:text="${erro}"></div>
+
+        <table th:if="${!#lists.isEmpty(users)}">
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>CPF</th>
+                    <th>RG</th>
+                    <th>Email</th>
+                    <th>Perfil</th>
+                    <th>Status</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="user : ${users}" th:classappend="${user.status == 'inativo' ? 'status-inativo' : ''}">
+                    <td th:text="${user.nomeUsu ?: '-'}">-</td>
+                    <td th:text="${user.cpfUsu ?: '-'}">-</td>
+                    <td th:text="${user.rgUsu ?: '-'}">-</td>
+                    <td th:text="${user.emailUsu ?: '-'}">-</td>
+                    <td th:text="${user.perfil ?: '-'}">-</td>
+                    <td th:text="${user.status == 'ativo' ? 'Ativo' : 'Inativo'}">Status</td>
+                    <td class="action-cell">
+                        <div class="actions-wrapper">
+                            <a th:href="@{/admin/users/edit/{id}(id=${user.idUsu})}" class="action-button edit-button">Editar</a>
+                            <form action="/admin/users/changeStatus" method="post" class="status-form">
+                                <input type="hidden" name="id" th:value="${user.idUsu}">
+                                <input type="hidden" name="status" th:value="${user.status == 'ativo' ? 'inativo' : 'ativo'}">
+                                <button type="submit" class="action-button" th:text="${user.status == 'ativo' ? 'Desativar' : 'Ativar'}">Alterar</button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <p th:if="${#lists.isEmpty(users)}">Nenhum usuário encontrado.</p>
+    </div>
+</body>
+</html>

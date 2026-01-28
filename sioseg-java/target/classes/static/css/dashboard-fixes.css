@@ -1,0 +1,105 @@
+/* Correções específicas para integração do dashboard */
+
+/* Garantir que o body use as variáveis corretas */
+body {
+    background-color: var(--light-gray) !important;
+    color: var(--text-color) !important;
+}
+
+/* Correções para o dashboard container */
+.dashboard-container {
+    background-color: var(--light-gray) !important;
+}
+
+/* Correções para cards do dashboard */
+.dashboard-card {
+    background-color: var(--card-bg-color) !important;
+    color: var(--text-color) !important;
+}
+
+/* Correções para títulos */
+.welcome-message h2,
+.card-title {
+    color: var(--title-color) !important;
+}
+
+/* Correções para o Kanban */
+.kanban-column {
+    background-color: var(--kanban-bg) !important;
+}
+
+.kanban-task {
+    background-color: var(--card-bg-color) !important;
+    color: var(--text-color) !important;
+}
+
+/* Correções para tema escuro */
+[data-theme='dark'] body {
+    background-color: var(--light-gray) !important;
+    color: var(--text-color) !important;
+}
+
+[data-theme='dark'] .dashboard-container {
+    background-color: var(--light-gray) !important;
+}
+
+[data-theme='dark'] .dashboard-card {
+    background-color: var(--card-bg-color) !important;
+    color: var(--text-color) !important;
+}
+
+[data-theme='dark'] .welcome-message h2,
+[data-theme='dark'] .card-title {
+    color: var(--title-color) !important;
+}
+
+[data-theme='dark'] .kanban-column {
+    background-color: var(--kanban-bg) !important;
+}
+
+[data-theme='dark'] .kanban-task {
+    background-color: var(--card-bg-color) !important;
+    color: var(--text-color) !important;
+}
+
+/* Correções para o slider do tema */
+.theme-switch .slider {
+    background-color: #ccc;
+}
+
+.theme-switch input:checked + .slider {
+    background-color: var(--primary-color);
+}
+
+.theme-switch .slider:before {
+    background-color: var(--slider-handle-bg);
+}
+
+/* Garantir que as cores dos headers do Kanban funcionem */
+.kanban-column:first-child .column-header {
+    border-bottom-color: var(--warning-color) !important;
+    color: var(--warning-color) !important;
+}
+
+.kanban-column:nth-child(2) .column-header {
+    border-bottom-color: var(--info-color) !important;
+    color: var(--info-color) !important;
+}
+
+.kanban-column:nth-child(3) .column-header {
+    border-bottom-color: var(--success-color) !important;
+    color: var(--success-color) !important;
+}
+
+/* Cores das bordas das tarefas por status */
+.kanban-column:first-child .kanban-task {
+    border-left-color: var(--warning-color) !important;
+}
+
+.kanban-column:nth-child(2) .kanban-task {
+    border-left-color: var(--info-color) !important;
+}
+
+.kanban-column:nth-child(3) .kanban-task {
+    border-left-color: var(--success-color) !important;
+}

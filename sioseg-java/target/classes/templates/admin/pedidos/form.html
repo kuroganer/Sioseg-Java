@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout/base :: layout(~{::title}, ~{::content})}">
+<head>
+    <title>Novo Pedido - SIOSeG</title>
+    <th:block th:fragment="css">
+        <link rel="stylesheet" th:href="@{/css/forms.css}" />
+    </th:block>
+</head>
+<body>
+    <th:block th:fragment="content">
+        <div class="form-container">
+            <div class="form-sidebar">
+                <div class="sidebar-header">
+                    <h2 class="sidebar-title" th:text="${pedido.idPed != null ? 'Editar Pedido' : 'Novo Pedido'}">Novo Pedido</h2>
+                </div>
+                <div class="sidebar-footer">
+                    <p>Preencha todos os campos obrigatórios</p>
+                </div>
+            </div>
+            
+            <div class="form-main">
+                <form th:action="${pedido.idPed != null ? '/admin/pedidos/edit/' + pedido.idPed : '/admin/pedidos/register'}" 
+                      method="post">
+                    
+                    <div class="form-section">
+                        <h3 class="form-section-title">Informações do Pedido</h3>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="produto">Produto *</label>
+                                <select id="produto" name="produto.idProd" required>
+                            <option value="">Selecione um produto</option>
+                            <option th:each="produto : ${produtos}" 
+                                    th:value="${produto.idProd}" 
+                                    th:text="${produto.nome + ' - Estoque: ' + produto.qtde}"
+                                    th:selected="${pedido.produto != null and pedido.produto.idProd == produto.idProd}">
+                                Produto - Estoque: 10
+                            </option>
+                        </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="qtde">Quantidade *</label>
+                                <input type="number" id="qtde" name="qtde" 
+                                       th:value="${pedido.qtde}" min="1" required />
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="usuario">Usuário Responsável *</label>
+                                <select id="usuario" name="usuario.idUsu" required>
+                            <option value="">Selecione um usuário</option>
+                            <option th:each="usuario : ${usuarios}" 
+                                    th:value="${usuario.idUsu}" 
+                                    th:text="${usuario.nome}"
+                                    th:selected="${pedido.usuario != null and pedido.usuario.idUsu == usuario.idUsu}">
+                                Usuário
+                            </option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-system__group" th:if="${pedido.idPed != null}">
+                        <label for="status" class="form-system__label">Status</label>
+                        <select id="status" name="status" class="form-system__input">
+                            <option value="pendente" th:selected="${pedido.status == 'pendente'}">Pendente</option>
+                            <option value="processando" th:selected="${pedido.status == 'processando'}">Processando</option>
+                            <option value="entregue" th:selected="${pedido.status == 'entregue'}">Entregue</option>
+                            <option value="cancelado" th:selected="${pedido.status == 'cancelado'}">Cancelado</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-system__row">
+                    <div class="form-system__group form-system__group--full">
+                        <label for="observacoes" class="form-system__label">Observações</label>
+                        <textarea id="observacoes" name="observacoes" class="form-system__textarea" 
+                                  rows="4" th:text="${pedido.observacoes}"></textarea>
+                    </div>
+                </div>
+                
+                <div class="form-system__actions">
+                    <button type="submit" class="form-system__btn form-system__btn--primary">
+                        <i class="fas fa-save"></i> 
+                        <span th:text="${pedido.idPed != null ? 'Atualizar' : 'Cadastrar'}">Cadastrar</span>
+                    </button>
+                    <a href="/admin/pedidos" class="form-system__btn form-system__btn--secondary">
+                        <i class="fas fa-times"></i> Cancelar
+                    </a>
+                </div>
+            </form>
+        </div>
+    </th:block>
+</body>
+</html>
