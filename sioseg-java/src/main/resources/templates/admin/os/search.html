@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout/base :: html}">
+<head>
+    <th:block th:fragment="css">
+        <link rel="stylesheet" th:href="@{/css/forms.css}" />
+        <link rel="stylesheet" th:href="@{/css/tables.css}" />
+    </th:block>
+</head>
+<body>
+    <th:block th:fragment="content">
+        <div class="form-system">
+            <div class="form-system__header">
+                <h1 class="form-system__title">Pesquisar Ordens de Serviço</h1>
+                <a href="/admin/os" class="form-system__btn form-system__btn--secondary">
+                    <i class="fas fa-arrow-left"></i> Voltar
+                </a>
+            </div>
+            
+            <form action="/admin/os/search" method="post" class="form-system__form">
+                <div class="form-system__row">
+                    <div class="form-system__group">
+                        <label for="tipo" class="form-system__label">Pesquisar por:</label>
+                        <select id="tipo" name="tipo" class="form-system__input" required>
+                            <option value="cliente" th:selected="${tipo == 'cliente'}">Nome do Cliente</option>
+                            <option value="tecnico" th:selected="${tipo == 'tecnico'}">Nome do Técnico</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-system__group">
+                        <label for="termo" class="form-system__label">Termo de busca:</label>
+                        <input type="text" id="termo" name="termo" class="form-system__input" 
+                               th:value="${termo}" placeholder="Digite o termo de busca" required />
+                    </div>
+                </div>
+                
+                <div class="form-system__actions">
+                    <button type="submit" class="form-system__btn form-system__btn--primary">
+                        <i class="fas fa-search"></i> Pesquisar
+                    </button>
+                </div>
+            </form>
+            
+            <!-- Resultados da pesquisa -->
+            <div th:if="${ordens != null}" class="table-system" style="margin-top: 30px;">
+                <div class="table-system__header">
+                    <h2 class="table-system__title">Resultados da Pesquisa</h2>
+                    <p th:if="${ordens.totalElements > 0}" class="table-system__info">
+                        Encontradas <span th:text="${ordens.totalElements}">0</span> ordens de serviço
+                    </p>
+                    <p th:if="${ordens.totalElements == 0}" class="table-system__info">
+                        Nenhuma OS encontrada para os critérios informados.
+                    </p>
+                </div>
+                
+                <div th:if="${ordens.totalElements > 0}" class="table-system__wrapper">
+                    <table class="table-system__table">
+                        <thead>
+                            <tr>
+                                <th class="table-system__header-cell">ID</th>
+                                <th class="table-system__header-cell">Cliente</th>
+                                <th class="table-system__header-cell">Técnico</th>
+                                <th class="table-system__header-cell">Tipo</th>
+                                <th class="table-system__header-cell">Status</th>
+                                <th class="table-system__header-cell">Data Abertura</th>
+                                <th class="table-system__header-cell">Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="ordem : ${ordens.content}" class="table-system__row">
+                                <td class="table-system__cell" th:text="${ordem.idOs}">1</td>
+                                <td class="table-system__cell" th:text="${ordem.cliente?.nome ?: '—'}">Cliente</td>
+                                <td class="table-system__cell" th:text="${ordem.tecnico?.nomeTec ?: '—'}">Técnico</td>
+                                <td class="table-system__cell" th:text="${ordem.tipoServico ?: '—'}">Tipo</td>
+                                <td class="table-system__cell">
+                                    <span class="table-system__badge" 
+                                          th:classappend="${ordem.status == 'encerrada'} ? 'table-system__badge--success' : 
+                                                         (${ordem.status == 'aberta'} ? 'table-system__badge--warning' : 'table-system__badge--info')"
+                                          th:text="${ordem.status}">Aberta</span>
+                                </td>
+                                <td class="table-system__cell" th:text="${ordem.dataAbertura != null ? #temporals.format(ordem.dataAbertura, 'dd/MM/yyyy HH:mm') : '—'}">01/01/2024</td>
+                                <td class="table-system__cell">
+                                    <a th:href="@{/admin/os/edit/{id}(id=${ordem.idOs})}" 
+                                       class="table-system__btn table-system__btn--primary">
+                                        <i class="fas fa-edit"></i> Editar
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <!-- Paginação dos resultados -->
+                <div th:if="${ordens.totalPages > 1}" style="margin-top: 20px; text-align: center;">
+                    <div style="display: inline-flex; gap: 5px;">
+                        <a th:if="${ordens.hasPrevious()}" 
+                           th:href="@{/admin/os/search(page=${ordens.number - 1}, tipo=${tipo}, termo=${termo})}"
+                           class="table-system__btn table-system__btn--secondary">Anterior</a>
+                        
+                        <span style="padding: 8px 12px; background: #f8f9fa; border-radius: 4px;">
+                            Página <span th:text="${ordens.number + 1}">1</span> de <span th:text="${ordens.totalPages}">1</span>
+                        </span>
+                        
+                        <a th:if="${ordens.hasNext()}" 
+                           th:href="@{/admin/os/search(page=${ordens.number + 1}, tipo=${tipo}, termo=${termo})}"
+                           class="table-system__btn table-system__btn--secondary">Próxima</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </th:block>
+</body>
+</html>

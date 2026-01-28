@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <title>SIOSeG - Admin</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="/img/icone.png">
+    <link rel="shortcut icon" href="/img/icone.png">
+    <link rel="apple-touch-icon" href="/img/icone.png">
+    
+    <!-- Fontes e Ícones -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="/css/globals.css">
+    <link rel="stylesheet" href="/css/layout.css">
+    <link rel="stylesheet" href="/css/navigation.css">
+    <link rel="stylesheet" href="/css/forms.css">
+    <link rel="stylesheet" href="/css/tables.css">
+    <link rel="stylesheet" href="/css/dashboard-minimal.css">
+    
+    <!-- Variáveis JavaScript globais -->
+    <script>
+        window.BASE_URL = '/';
+        window.userProfile = 'admin';
+    </script>
+</head>
+<body data-user-profile="admin">
+    <!-- Header -->
+    <header class="top-bar">
+        <a href="/dashboard" class="site-logo-link">
+            <div class="site-logo-text">SIOSeG</div>
+        </a>
+        
+        <!-- Mobile Menu Toggle -->
+        <div class="mobile-menu-container">
+            <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Menu">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+        
+        <!-- Navigation Menu -->
+        <nav class="main-navigation" id="main-navigation">
+            <ul class="menu">
+                <li class="has-submenu">
+                    <a href="javascript:void(0);">Usuários</a>
+                    <ul class="submenu">
+                        <li><a href="/admin/users/register">Cadastrar Usuário</a></li>
+                        <li><a href="/admin/users/search">Pesquisar Usuário</a></li>
+                        <li><a href="/admin/users">Gerenciar Usuário</a></li>
+                    </ul>
+                </li>
+                <li class="has-submenu">
+                    <a href="javascript:void(0);">Técnicos</a>
+                    <ul class="submenu">
+                        <li><a href="/admin/tecnicos/register">Cadastrar Técnico</a></li>
+                        <li><a href="/admin/tecnicos/search">Pesquisar Técnico</a></li>
+                        <li><a href="/admin/tecnicos">Gerenciar Técnicos</a></li>
+                    </ul>
+                </li>
+                <li class="has-submenu">
+                    <a href="javascript:void(0);">Clientes</a>
+                    <ul class="submenu">
+                        <li><a href="/admin/clientes/register">Cadastrar Cliente</a></li>
+                        <li><a href="/admin/clientes/search">Pesquisar Cliente</a></li>
+                        <li><a href="/admin/clientes">Gerenciar Clientes</a></li>
+                    </ul>
+                </li>
+                <li class="has-submenu">
+                    <a href="javascript:void(0);">Produtos</a>
+                    <ul class="submenu">
+                        <li><a href="/admin/produtos/register">Cadastrar Produto</a></li>
+                        <li><a href="/admin/produtos/search">Pesquisar Produto</a></li>
+                        <li><a href="/admin/produtos">Gerenciar Produtos</a></li>
+                    </ul>
+                </li>
+                <li class="has-submenu">
+                    <a href="javascript:void(0);">Ordens de Serviço</a>
+                    <ul class="submenu">
+                        <li><a href="/admin/os/register">Cadastrar OS</a></li>
+                        <li><a href="/admin/os/search">Pesquisar OS</a></li>
+                        <li><a href="/admin/os">Listar OS</a></li>
+                        <li><a href="/admin/os/calendario">Calendário</a></li>
+                    </ul>
+                </li>
+                <li class="has-submenu">
+                    <a href="javascript:void(0);">Relatórios</a>
+                    <ul class="submenu">
+                        <li><a href="/admin/relatorios">Resumo Geral</a></li>
+                        <li><a href="/admin/relatorios/performance-tecnicos">Performance Técnicos</a></li>
+                        <li><a href="/admin/relatorios/buscar-os">Buscar OS</a></li>
+                        <li><a href="/admin/relatorios/produtos">Relatório de Produtos</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+
+        <div class="user-info">
+            <div class="user-controls">
+                <label class="theme-switch">
+                    <input type="checkbox" id="theme-toggle">
+                    <span class="slider"></span>
+                </label>
+                <span class="user-text">
+                    Olá, <strong>admin@sioseg.com</strong> (Admin)
+                </span>
+                <a href="/logout" class="logout-link">Sair</a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="dashboard-container">
+            <header class="dashboard-header">
+                <div class="welcome-message">
+                    <h2>Olá Admin, bem-vindo ao SIOSEG!</h2>
+                    <p>Aqui está um resumo do sistema.</p>
+                </div>
+            </header>
+            
+            <hr class="header-divider">
+            
+            <div class="dashboard-grid">
+                <!-- Coluna da Esquerda -->
+                <div class="grid-column">
+                    <!-- Quadro 1: Resumo Geral -->
+                    <div class="dashboard-card">
+                        <h2 class="card-title">Resumo Geral</h2>
+                        <div class="chart-container">
+                            <canvas id="overviewPieChart"></canvas>
+                        </div>
+                    </div>
+                    <!-- Quadro 3: Relatórios e Análise -->
+                    <div class="dashboard-card">
+                        <h2 class="card-title">Média de Avaliações (Últimos 7 dias)</h2>
+                        <div class="chart-container">
+                            <canvas id="ratingsChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Coluna da Direita -->
+                <div class="grid-column">
+                    <!-- Quadro 2: Gerenciamento de OS -->
+                    <div class="dashboard-card card-large">
+                        <h2 class="card-title">Gerenciamento Rápido de OS</h2>
+                        <div class="kanban-board">
+                            <div class="kanban-column">
+                                <div class="column-header">A Fazer</div>
+                                <div class="task-list" id="todo-tasks">
+                                    <div th:each="os : ${osAFazer}" class="kanban-task" draggable="true" th:id="'os-' + ${os.idOs}">
+                                        <h4 th:text="'OS #' + ${os.idOs}">OS #1</h4>
+                                        <p th:text="'Cliente: ' + (${os.cliente} != null ? ${os.cliente.nomeCli} : 'N/A')">Cliente: Exemplo</p>
+                                        <span class="task-assigned" th:text="'Téc: ' + (${os.tecnico} != null ? ${os.tecnico.nomeTec} : 'N/A')">Téc: João</span>
+                                    </div>
+                                    <div th:if="${#lists.isEmpty(osAFazer)}" class="kanban-task-empty">
+                                        <p style="text-align: center; color: #999; font-style: italic;">Nenhuma OS a fazer</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="kanban-column">
+                                <div class="column-header">Em Andamento</div>
+                                <div class="task-list" id="doing-tasks">
+                                    <div th:each="os : ${osEmAndamento}" class="kanban-task" draggable="true" th:id="'os-' + ${os.idOs}">
+                                        <h4 th:text="'OS #' + ${os.idOs}">OS #2</h4>
+                                        <p th:text="'Cliente: ' + (${os.cliente} != null ? ${os.cliente.nomeCli} : 'N/A')">Cliente: Teste</p>
+                                        <span class="task-assigned" th:text="'Téc: ' + (${os.tecnico} != null ? ${os.tecnico.nomeTec} : 'N/A')">Téc: Maria</span>
+                                    </div>
+                                    <div th:if="${#lists.isEmpty(osEmAndamento)}" class="kanban-task-empty">
+                                        <p style="text-align: center; color: #999; font-style: italic;">Nenhuma OS em andamento</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="kanban-column">
+                                <div class="column-header">Concluído</div>
+                                <div class="task-list" id="done-tasks">
+                                    <div th:each="os : ${osConcluidas}" class="kanban-task" draggable="true" th:id="'os-' + ${os.idOs}">
+                                        <h4 th:text="'OS #' + ${os.idOs}">OS #3</h4>
+                                        <p th:text="'Cliente: ' + (${os.cliente} != null ? ${os.cliente.nomeCli} : 'N/A')">Cliente: Demo</p>
+                                        <span class="task-assigned" th:text="'Téc: ' + (${os.tecnico} != null ? ${os.tecnico.nomeTec} : 'N/A')">Téc: Pedro</span>
+                                    </div>
+                                    <div th:if="${#lists.isEmpty(osConcluidas)}" class="kanban-task-empty">
+                                        <p style="text-align: center; color: #999; font-style: italic;">Nenhuma OS concluída</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Quadro 4: Top Técnicos -->
+                    <div class="dashboard-card">
+                        <h2 class="card-title">Top 3 Técnicos por Avaliação</h2>
+                        <ul class="ranking-list">
+                            <li th:each="tecnico : ${topTecnicos}">
+                                <span class="ranking-name" th:text="${tecnico.nome}">Nome do Técnico</span>
+                                <span class="ranking-score">
+                                    <span th:text="${#numbers.formatDecimal(tecnico.mediaAvaliacoes, 1, 1)}">5.0</span>
+                                    <i class="fas fa-star"></i>
+                                </span>
+                            </li>
+                            <li th:if="${#lists.isEmpty(topTecnicos)}" style="text-align: center; color: var(--text-color); font-style: italic; padding: 20px 0;">
+                                Nenhuma avaliação disponível
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div class="footer">
+        <div class="footer-content">
+            <span class="footer-text">© 2025 SIOSeG - Todos os direitos reservados</span>
+            <span class="footer-separator">•</span>
+            <a href="javascript:void(0)" class="footer-link">Política de Privacidade</a>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="/js/theme-switcher.js"></script>
+    <script src="/js/mobile-menu.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="/js/admin-dashboard.js"></script>
+    <script>
+        // Dados para os gráficos - dados reais do banco
+        window.chartLabels = [[${chartLabels}]];
+        window.chartData = [[${chartData}]];
+        
+        window.pieChartData = {
+            abertas: [[${stats.abertas_total != null ? stats.abertas_total : stats.abertas_hoje}]],
+            concluidas: [[${stats.total_concluidas}]],
+            andamento: [[${stats.em_andamento}]],
+            avaliacoes: [[${stats.avaliacoes_pendentes}]]
+        };
+    </script>
+</body>
+</html>

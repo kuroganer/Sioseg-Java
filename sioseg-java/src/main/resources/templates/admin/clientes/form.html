@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout/base :: layout(~{::title}, ~{::content})}">
+<head>
+    <title>Novo Cliente - SIOSeG</title>
+</head>
+<body>
+    <th:block th:fragment="content">
+        <div class="form-container">
+            <div class="form-sidebar">
+                <div class="sidebar-header">
+                    <h2 class="sidebar-title" th:text="${cliente.idCli != null ? 'Editar Cliente' : 'Novo Cliente'}">Cliente</h2>
+                </div>
+                <div class="sidebar-footer">
+                    <p>Preencha todos os campos obrigatórios</p>
+                </div>
+            </div>
+            
+            <div class="form-main">
+                <div th:if="${sucesso}" class="success-message" th:text="${sucesso}"></div>
+                <div th:if="${erro}" class="error-message" th:text="${erro}"></div>
+                
+                <form action="/admin/clientes/salvar" method="post">
+                    
+                    <div class="form-section">
+                        <h3 class="form-section-title">Tipo de Pessoa</h3>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="tipoPessoa">Tipo de Pessoa *</label>
+                                <select id="tipoPessoa" name="tipoPessoa" required>
+                                    <option value="">Selecione</option>
+                                    <option value="fisica">Pessoa Física</option>
+                                    <option value="juridica">Pessoa Jurídica</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Campos Pessoa Física -->
+                    <div class="form-section" id="campos-fisica" style="display: none;">
+                        <h3 class="form-section-title">Dados Pessoais</h3>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="nomeCli">Nome Completo *</label>
+                                <input type="text" id="nomeCli" name="nomeCli" />
+                            </div>
+                            <div class="form-group">
+                                <label for="nomeSocial">Nome Social</label>
+                                <input type="text" id="nomeSocial" name="nomeSocial" />
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="cpfCli">CPF *</label>
+                                <input type="text" id="cpfCli" name="cpfCli" />
+                            </div>
+                            <div class="form-group">
+                                <label for="dataNascimentoCli">Data de Nascimento</label>
+                                <input type="date" id="dataNascimentoCli" name="dataNascimentoCli" />
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="rgCli">RG</label>
+                                <input type="text" id="rgCli" name="rgCli" />
+                            </div>
+                            <div class="form-group">
+                                <label for="rgEmissorCli">Órgão Emissor RG</label>
+                                <input type="text" id="rgEmissorCli" name="rgEmissorCli" />
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="dataExpedicaoRgCli">Data Expedição RG</label>
+                                <input type="date" id="dataExpedicaoRgCli" name="dataExpedicaoRgCli" />
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Campos Pessoa Jurídica -->
+                    <div class="form-section" id="campos-juridica" style="display: none;">
+                        <h3 class="form-section-title">Dados da Empresa</h3>
+                        <div class="form-row">
+                            <div class="form-group flex-2">
+                                <label for="razaoSocial">Razão Social *</label>
+                                <input type="text" id="razaoSocial" name="razaoSocial" />
+                            </div>
+                            <div class="form-group">
+                                <label for="cnpj">CNPJ *</label>
+                                <input type="text" id="cnpj" name="cnpj" />
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-section">
+                        <h3 class="form-section-title">Contato</h3>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="emailCli">Email *</label>
+                                <input type="email" id="emailCli" name="emailCli" required />
+                            </div>
+                            <div class="form-group">
+                                <label for="tel1Cli">Telefone Principal *</label>
+                                <input type="tel" id="tel1Cli" name="tel1Cli" required />
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="tel2Cli">Telefone Secundário</label>
+                                <input type="tel" id="tel2Cli" name="tel2Cli" />
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-section">
+                        <h3 class="form-section-title">Endereço</h3>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="cep">CEP</label>
+                                <input type="text" id="cep" name="cep" />
+                            </div>
+                            <div class="form-group flex-2">
+                                <label for="logradouro">Logradouro *</label>
+                                <input type="text" id="logradouro" name="logradouro" required />
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="numEnd">Número *</label>
+                                <input type="text" id="numEnd" name="numEnd" required />
+                            </div>
+                            <div class="form-group">
+                                <label for="complemento">Complemento</label>
+                                <input type="text" id="complemento" name="complemento" />
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="bairro">Bairro *</label>
+                                <input type="text" id="bairro" name="bairro" required />
+                            </div>
+                            <div class="form-group">
+                                <label for="cidade">Cidade *</label>
+                                <input type="text" id="cidade" name="cidade" required />
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="uf">UF *</label>
+                                <select id="uf" name="uf" required>
+                                    <option value="">Selecione</option>
+                                    <option value="AC">AC</option>
+                                    <option value="AL">AL</option>
+                                    <option value="AP">AP</option>
+                                    <option value="AM">AM</option>
+                                    <option value="BA">BA</option>
+                                    <option value="CE">CE</option>
+                                    <option value="DF">DF</option>
+                                    <option value="ES">ES</option>
+                                    <option value="GO">GO</option>
+                                    <option value="MA">MA</option>
+                                    <option value="MT">MT</option>
+                                    <option value="MS">MS</option>
+                                    <option value="MG">MG</option>
+                                    <option value="PA">PA</option>
+                                    <option value="PB">PB</option>
+                                    <option value="PR">PR</option>
+                                    <option value="PE">PE</option>
+                                    <option value="PI">PI</option>
+                                    <option value="RJ">RJ</option>
+                                    <option value="RN">RN</option>
+                                    <option value="RS">RS</option>
+                                    <option value="RO">RO</option>
+                                    <option value="RR">RR</option>
+                                    <option value="SC">SC</option>
+                                    <option value="SP">SP</option>
+                                    <option value="SE">SE</option>
+                                    <option value="TO">TO</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="tipoMoradia">Tipo de Moradia</label>
+                                <select id="tipoMoradia" name="tipoMoradia">
+                                    <option value="casa">Casa</option>
+                                    <option value="apartamento">Apartamento</option>
+                                    <option value="outro">Outro</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="pontoReferencia">Ponto de Referência</label>
+                                <input type="text" id="pontoReferencia" name="pontoReferencia" />
+                            </div>
+                            <div class="form-group">
+                                <label for="endereco">Endereço Completo (Automático)</label>
+                                <input type="text" id="endereco" name="endereco" readonly />
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-section">
+                        <h3 class="form-section-title">Acesso ao Sistema</h3>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="senha">Senha *</label>
+                                <input type="password" id="senha" name="senha" required />
+                            </div>
+                            <div class="form-group">
+                                <label for="confirmarSenha">Confirmar Senha *</label>
+                                <input type="password" id="confirmarSenha" name="confirmarSenha" required />
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="status">Status</label>
+                                <select id="status" name="status">
+                                    <option value="ativo">Ativo</option>
+                                    <option value="inativo">Inativo</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" th:text="${cliente.idCli != null ? 'Atualizar Cliente' : 'Cadastrar Cliente'}">
+                        Cadastrar Cliente
+                    </button>
+                </form>
+            </div>
+        </div>
+        
+        <script th:src="@{/js/cliente_register_form.js}"></script>
+    </th:block>
+</body>
+</html>

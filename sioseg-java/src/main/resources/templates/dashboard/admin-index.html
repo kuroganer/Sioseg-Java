@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout/base :: layout(~{::title}, ~{::content})}">
+<head>
+    <title>Dashboard - SIOSeG</title>
+</head>
+<body>
+    <th:block th:fragment="content">
+        <div class="dashboard-container">
+            <header class="dashboard-header">
+                <div class="welcome-message">
+                    <h2 th:text="'Olá ' + ${userName} + ', bem-vindo ao SIOSEG!'">Olá Admin, bem-vindo ao SIOSEG!</h2>
+                    <p>Aqui está um resumo do sistema.</p>
+                </div>
+            </header>
+            
+            <hr class="header-divider">
+            
+            <div class="dashboard-grid">
+                <!-- Coluna da Esquerda -->
+                <div class="grid-column">
+                    <!-- Quadro 1: Resumo Geral -->
+                    <div class="dashboard-card">
+                        <h2 class="card-title">Resumo Geral</h2>
+                        <div class="chart-container">
+                            <canvas id="overviewPieChart"></canvas>
+                        </div>
+                    </div>
+                    
+                    <!-- Quadro 3: Relatórios e Análise -->
+                    <div class="dashboard-card">
+                        <h2 class="card-title">Média de Avaliações (Últimos 7 dias)</h2>
+                        <div class="chart-container">
+                            <canvas id="ratingsChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Coluna da Direita -->
+                <div class="grid-column">
+                    <!-- Quadro 2: Gerenciamento de OS -->
+                    <div class="dashboard-card card-large">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                            <h2 class="card-title" style="margin-bottom: 0;">Gerenciamento Rápido de OS</h2>
+                            <a href="/admin/os/register" class="btn btn-primary" style="background: var(--primary-color, #1E3A8A); color: white; padding: 8px 16px; border-radius: 6px; text-decoration: none; font-size: 14px;">
+                                <i class="fas fa-plus"></i> Nova OS
+                            </a>
+                        </div>
+                        <div class="kanban-board">
+                            <div class="kanban-column">
+                                <div class="column-header">A Fazer</div>
+                                <div class="task-list" id="todo-tasks">
+                                    <div th:each="os : ${osAFazer}" class="kanban-task" th:id="'os-' + ${os.idOs}" draggable="true">
+                                        <h4 th:text="'OS #' + ${os.idOs}">OS #1</h4>
+                                        <p th:text="'Cliente: ' + ${os.cliente?.nome ?: 'N/A'}">Cliente: Nome</p>
+                                        <span class="task-assigned" th:text="'Téc: ' + ${os.tecnico?.nomeTec ?: 'N/A'}">Téc: Nome</span>
+                                        <div class="task-actions">
+                                            <a th:href="@{/admin/os/edit/{id}(id=${os.idOs})}" class="task-action-btn view-btn" title="Ver/Editar OS">
+                                                <i class="fas fa-edit"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="kanban-column">
+                                <div class="column-header">Em Andamento</div>
+                                <div class="task-list" id="doing-tasks">
+                                    <div th:each="os : ${osEmAndamento}" class="kanban-task" th:id="'os-' + ${os.idOs}" draggable="true">
+                                        <h4 th:text="'OS #' + ${os.idOs}">OS #2</h4>
+                                        <p th:text="'Cliente: ' + ${os.cliente?.nome ?: 'N/A'}">Cliente: Nome</p>
+                                        <span class="task-assigned" th:text="'Téc: ' + ${os.tecnico?.nomeTec ?: 'N/A'}">Téc: Nome</span>
+                                        <div class="task-actions">
+                                            <a th:href="@{/admin/os/edit/{id}(id=${os.idOs})}" class="task-action-btn view-btn" title="Ver/Editar OS">
+                                                <i class="fas fa-edit"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="kanban-column">
+                                <div class="column-header">Concluído</div>
+                                <div class="task-list" id="done-tasks">
+                                    <div th:each="os : ${osConcluidas}" class="kanban-task" th:id="'os-' + ${os.idOs}" draggable="true">
+                                        <h4 th:text="'OS #' + ${os.idOs}">OS #3</h4>
+                                        <p th:text="'Cliente: ' + ${os.cliente?.nome ?: 'N/A'}">Cliente: Nome</p>
+                                        <span class="task-assigned" th:text="'Téc: ' + ${os.tecnico?.nomeTec ?: 'N/A'}">Téc: Nome</span>
+                                        <div class="task-actions">
+                                            <a th:href="@{/admin/os/edit/{id}(id=${os.idOs})}" class="task-action-btn view-btn" title="Ver/Editar OS">
+                                                <i class="fas fa-edit"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Quadro 4: Top Técnicos -->
+                    <div class="dashboard-card">
+                        <h2 class="card-title">Top 3 Técnicos por Avaliação</h2>
+                        <ul class="ranking-list">
+                            <li style="text-align: center; color: var(--text-color); font-style: italic; padding: 20px 0;">
+                                Nenhuma avaliação disponível
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+        
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script th:src="@{/js/dashboard-admin.js}"></script>
+        <script th:inline="javascript">
+            window.chartLabels = /*[[${chartLabels}]]*/ ['D-6', 'D-5', 'D-4', 'D-3', 'D-2', 'Ontem', 'Hoje'];
+            window.chartData = /*[[${chartData}]]*/ [0, 0, 0, 0, 0, 0, 0];
+            window.pieChartData = {
+                abertas: /*[[${stats.abertas_hoje}]]*/ 0,
+                concluidas: /*[[${stats.total_concluidas}]]*/ 0,
+                andamento: /*[[${stats.em_andamento}]]*/ 0,
+                avaliacoes: /*[[${stats.avaliacoes_pendentes}]]*/ 0
+            };
+            const BASE_URL = /*[[@{/}]]*/ '/';
+        </script>
+    </th:block>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout/base :: html}">
+<head>
+    <th:block th:fragment="css">
+        <link rel="stylesheet" th:href="@{/css/tables.css}" />
+    </th:block>
+</head>
+<body>
+    <th:block th:fragment="content">
+        <div class="page-header">
+            <h1>Técnicos</h1>
+            <a th:href="@{/admin/tecnicos/register}" class="btn btn-primary">
+                <i class="fas fa-plus"></i> Novo Técnico
+            </a>
+        </div>
+        
+        <div class="table-container">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nome</th>
+                        <th>Email</th>
+                        <th>Telefone</th>
+                        <th>Especialidade</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td colspan="6" style="text-align: center; padding: 40px;">
+                            Nenhum técnico encontrado
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </th:block>
+</body>
+</html>

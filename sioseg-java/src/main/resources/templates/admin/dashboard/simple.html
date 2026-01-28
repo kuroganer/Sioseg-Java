@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard Admin</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/dashboard-minimal.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <header class="dashboard-header">
+            <h2>Dashboard Admin</h2>
+        </header>
+        
+        <hr class="header-divider">
+        
+        <div class="dashboard-grid">
+            <div class="grid-column">
+                <div class="dashboard-card">
+                    <h2 class="card-title">Resumo Geral</h2>
+                    <div class="chart-container">
+                        <canvas id="overviewPieChart"></canvas>
+                    </div>
+                </div>
+                
+                <div class="dashboard-card">
+                    <h2 class="card-title">Média de Avaliações</h2>
+                    <div class="chart-container">
+                        <canvas id="ratingsChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid-column">
+                <div class="dashboard-card">
+                    <h2 class="card-title">Gerenciamento de OS</h2>
+                    <div class="kanban-board">
+                        <div class="kanban-column">
+                            <div class="column-header">A Fazer</div>
+                            <div class="task-list" id="todo-tasks">
+                                <div class="kanban-task">
+                                    <h4>OS #1</h4>
+                                    <p>Cliente: Exemplo</p>
+                                    <span class="task-assigned">Téc: João</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="kanban-column">
+                            <div class="column-header">Em Andamento</div>
+                            <div class="task-list" id="doing-tasks">
+                                <div class="kanban-task">
+                                    <h4>OS #2</h4>
+                                    <p>Cliente: Teste</p>
+                                    <span class="task-assigned">Téc: Maria</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="kanban-column">
+                            <div class="column-header">Concluído</div>
+                            <div class="task-list" id="done-tasks">
+                                <div class="kanban-task">
+                                    <h4>OS #3</h4>
+                                    <p>Cliente: Demo</p>
+                                    <span class="task-assigned">Téc: Pedro</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="dashboard-card">
+                    <h2 class="card-title">Top 3 Técnicos</h2>
+                    <ul class="ranking-list">
+                        <li>
+                            <span>João Silva</span>
+                            <span>4.8 ⭐</span>
+                        </li>
+                        <li>
+                            <span>Maria Santos</span>
+                            <span>4.7 ⭐</span>
+                        </li>
+                        <li>
+                            <span>Pedro Costa</span>
+                            <span>4.5 ⭐</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        window.pieChartData = {
+            abertas: 15,
+            concluidas: 12,
+            andamento: 8,
+            avaliacoes: 3
+        };
+        
+        window.chartLabels = ['D-6', 'D-5', 'D-4', 'D-3', 'D-2', 'Ontem', 'Hoje'];
+        window.chartData = [3, 4, 2, 5, 3, 4, 4];
+    </script>
+    <script src="/js/admin-dashboard.js"></script>
+</body>
+</html>

@@ -1,0 +1,288 @@
+/* Reset Global - PRIMEIRO A SER CARREGADO */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; /* Essencial para um bom layout */
+}
+
+/* Variáveis CSS Globais - Compatibilidade com projeto original */
+:root {
+    /* Cores principais */
+    --primary-color: #1E3A8A;
+    --success-color: #16a34a;
+    --warning-color: #F97316;
+    --info-color: #0ea5e9;
+    
+    /* Cores de fundo */
+    --light-gray: #F3F4F6;
+    --dark-gray: #343a40;
+    --card-bg-color: #ffffff;
+    
+    /* Cores de texto */
+    --text-color: #555;
+    --label-color: #6B7280;
+    --title-color: #2c3e50;
+    
+    /* Efeitos */
+    --card-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    --card-shadow-hover: 0 6px 16px rgba(0,0,0,0.12);
+    --border-color: #e0e0e0;
+    
+    /* Cores de layout (compatibilidade) */
+    --color-header-bg: #1E3A8A;
+    --color-header-text: #FFFFFF;
+    --color-background-card: #F3F4F6;
+    --color-accent: #F97316;
+    --color-section-bg: #E0E7FF;
+    --color-text-primary: #1F2937;
+    --color-text-secondary: #6B7280;
+    --color-link-default: var(--primary-color);
+    --color-border: #D1D5DB;
+    --color-accent-strong: #EA580C;
+    
+    /* Dashboard específico */
+    --accent-color: #1E3A8A;
+    --slider-handle-bg: #fff;
+    --kanban-bg: #f8f9fa;
+}
+
+[data-theme='dark'] {
+    /* Cores principais */
+    --primary-color: #60A5FA;
+    
+    /* Cores de fundo */
+    --light-gray: #0F172A;
+    --dark-gray: #F1F5F9;
+    --card-bg-color: #1E293B;
+    --card-bg: #1E293B;
+    
+    /* Cores de texto */
+    --text-color: #CBD5E1;
+    --label-color: #9CA3AF;
+    --title-color: #F1F5F9;
+    
+    /* Efeitos */
+    --card-shadow: 0 4px 12px rgba(0,0,0,0.6);
+    --card-shadow-hover: 0 6px 16px rgba(0,0,0,0.7);
+    --border-color: #475569;
+    
+    /* Cores de layout (compatibilidade) */
+    --color-header-bg: #0F172A;
+    --color-header-text: #FFFFFF;
+    --color-background-card: #1E293B;
+    --color-accent: #FB923C;
+    --color-section-bg: #334155;
+    --color-text-primary: #FFFFFF;
+    --color-text-secondary: #CBD5E1;
+    --color-link-default: #60A5FA;
+    --color-border: #475569;
+    --color-accent-strong: #F97316;
+    
+    /* Dashboard específico */
+    --accent-color: #60A5FA;
+    --slider-handle-bg: #1E293B;
+    --kanban-bg: #334155;
+}
+
+/* Estilos para o BODY (globais para TODO O SITE, exceto login) */
+body {
+    font-family: 'Poppins', Arial, Helvetica, sans-serif;
+    font-size: 14px;
+    background-color: var(--light-gray);
+    color: var(--text-color);
+    margin: 0;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* --- ESTILOS DA NOVA BARRA SUPERIOR (top-bar) --- */
+.top-bar { /* Classe renomeada */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #20a136; /* Fundo escuro para a barra */
+    color: #060303;
+    padding: 10px 20px;
+    height: 60px; /* Altura da barra superior (ajuste conforme necessário) */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.site-logo-link {
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.site-logo-text { /* Estilos para o texto/mini-logo na barra superior */
+    font-size: 24px; /* Tamanho da fonte para "SIOSeG" */
+    font-weight: bold;
+    color: #fff; /* Cor do texto "SIOSeG" */
+    margin-left: 20px; /* Espaçamento da borda esquerda */
+    transition: all 0.3s ease;
+}
+
+.site-logo-link:hover .site-logo-text {
+    color: #F97316;
+    transform: scale(1.05);
+}
+
+/* Estilos para as informações do usuário logado */
+.top-bar .user-info { /* Ajuste o seletor para .top-bar */
+    color: white;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+}
+
+.top-bar .user-info a { /* Ajuste o seletor para .top-bar */
+    color: white;
+    text-decoration: none;
+    margin-left: 15px;
+}
+
+.top-bar .user-info a:hover { /* Ajuste o seletor para .top-bar */
+    text-decoration: underline;
+}
+
+/* --- ESTILOS DA IMAGEM DE BANNER PRINCIPAL (topo.jpg) --- */
+
+
+/* --- ESTILOS DA BARRA DE NAVEGAÇÃO (<section> <nav>) --- */
+section {
+    background-color: #f8f8f8;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+main {
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.content {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* --- ESTILOS DO RODAPÉ --- */
+.footer {
+    background-color: #20a136;
+    color: #fff;
+    text-align: center;
+    padding: 10px;
+    height: 60px; /* Rodapé mais compacto */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* --- TEMA DARK PARA ESTILOS GLOBAIS --- */
+[data-theme='dark'] body {
+    background-color: #0F172A; /* Fundo muito escuro */
+    color: #FFFFFF; /* Texto branco puro */
+}
+
+[data-theme='dark'] .top-bar {
+    background-color: #0F172A; /* Header muito escuro */
+    color: #FFFFFF;
+}
+
+[data-theme='dark'] .site-logo-text {
+    color: #F9FAFB; /* Logo claro */
+}
+
+[data-theme='dark'] .site-logo-link:hover .site-logo-text {
+    color: #F97316;
+    transform: scale(1.05);
+}
+
+[data-theme='dark'] .user-info {
+    color: #FFFFFF; /* Texto do usuário branco puro */
+}
+
+[data-theme='dark'] .user-info a {
+    color: #FFFFFF; /* Links brancos puros */
+}
+
+[data-theme='dark'] .user-info a:hover {
+    color: #F97316; /* Hover laranja */
+}
+
+[data-theme='dark'] section {
+    background-color: #374151; /* Seção escura */
+}
+
+[data-theme='dark'] main {
+    background-color: #0F172A; /* Main muito escuro */
+}
+
+[data-theme='dark'] .content {
+    background-color: #1E293B; /* Conteúdo escuro */
+    color: #FFFFFF; /* Texto branco puro */
+    border: 1px solid #475569;
+}
+
+[data-theme='dark'] .footer {
+    background-color: #0F172A; /* Footer muito escuro */
+    color: #FFFFFF; /* Texto branco puro */
+}
+
+a{
+    text-decoration: none;
+}
+
+/* --- ESTILOS PARA FILTROS --- */
+.filter-container {
+    background: #f8f9fa;
+    padding: 15px;
+    border-radius: 6px;
+    margin-bottom: 20px;
+    border: 1px solid #dee2e6;
+}
+
+.filter-row {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.filter-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.filter-label {
+    font-weight: bold;
+    color: #495057;
+}
+
+.filter-select {
+    padding: 8px 12px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    background: white;
+    min-width: 140px;
+}
+
+/* --- TEMA ESCURO PARA FILTROS --- */
+[data-theme='dark'] .filter-container {
+    background: #374151;
+    border-color: #4B5563;
+}
+
+[data-theme='dark'] .filter-label {
+    color: #E5E7EB;
+}
+
+[data-theme='dark'] .filter-select {
+    background: #1F2937;
+    border-color: #4B5563;
+    color: #E5E7EB;
+}
+
+[data-theme='dark'] .filter-select option {
+    background: #1F2937;
+    color: #E5E7EB;
+}

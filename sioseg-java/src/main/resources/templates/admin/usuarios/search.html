@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout/base :: html}">
+<head>
+    <th:block th:fragment="css">
+        <link rel="stylesheet" th:href="@{/css/forms.css}" />
+        <link rel="stylesheet" th:href="@{/css/tables.css}" />
+    </th:block>
+</head>
+<body>
+    <th:block th:fragment="content">
+        <div class="form-system">
+            <div class="form-system__header">
+                <h1 class="form-system__title">Pesquisar Usuários</h1>
+                <a href="/admin/usuarios" class="form-system__btn form-system__btn--secondary">
+                    <i class="fas fa-arrow-left"></i> Voltar
+                </a>
+            </div>
+            
+            <form action="/admin/usuarios/search" method="post" class="form-system__form">
+                <div class="form-system__row">
+                    <div class="form-system__group">
+                        <label for="tipo" class="form-system__label">Pesquisar por:</label>
+                        <select id="tipo" name="tipo" class="form-system__input" required>
+                            <option value="nome" th:selected="${tipo == 'nome'}">Nome</option>
+                            <option value="email" th:selected="${tipo == 'email'}">Email</option>
+                            <option value="cpf" th:selected="${tipo == 'cpf'}">CPF</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-system__group">
+                        <label for="termo" class="form-system__label">Termo de busca:</label>
+                        <input type="text" id="termo" name="termo" class="form-system__input" 
+                               th:value="${termo}" placeholder="Digite o termo de busca" required />
+                    </div>
+                </div>
+                
+                <div class="form-system__actions">
+                    <button type="submit" class="form-system__btn form-system__btn--primary">
+                        <i class="fas fa-search"></i> Pesquisar
+                    </button>
+                </div>
+            </form>
+            
+            <!-- Resultados da pesquisa -->
+            <div th:if="${usuarios != null}" class="table-system" style="margin-top: 30px;">
+                <div class="table-system__header">
+                    <h2 class="table-system__title">Resultados da Pesquisa</h2>
+                    <p th:if="${usuarios.totalElements > 0}" class="table-system__info">
+                        Encontrados <span th:text="${usuarios.totalElements}">0</span> usuários
+                    </p>
+                    <p th:if="${usuarios.totalElements == 0}" class="table-system__info">
+                        Nenhum usuário encontrado para os critérios informados.
+                    </p>
+                </div>
+                
+                <div th:if="${usuarios.totalElements > 0}" class="table-system__wrapper">
+                    <table class="table-system__table">
+                        <thead>
+                            <tr>
+                                <th class="table-system__header-cell">Nome</th>
+                                <th class="table-system__header-cell">CPF</th>
+                                <th class="table-system__header-cell">Email</th>
+                                <th class="table-system__header-cell">Perfil</th>
+                                <th class="table-system__header-cell">Status</th>
+                                <th class="table-system__header-cell">Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="usuario : ${usuarios.content}" class="table-system__row">
+                                <td class="table-system__cell" th:text="${usuario.nome ?: '—'}">Nome</td>
+                                <td class="table-system__cell" th:text="${usuario.cpfUsu ?: '—'}">CPF</td>
+                                <td class="table-system__cell" th:text="${usuario.emailUsu ?: '—'}">Email</td>
+                                <td class="table-system__cell" th:text="${usuario.perfil ?: '—'}">Perfil</td>
+                                <td class="table-system__cell">
+                                    <span class="table-system__badge" 
+                                          th:classappend="${usuario.status == 'ativo'} ? 'table-system__badge--success' : 'table-system__badge--error'"
+                                          th:text="${usuario.status}">Ativo</span>
+                                </td>
+                                <td class="table-system__cell">
+                                    <a th:href="@{/admin/usuarios/edit/{id}(id=${usuario.idUsu})}" 
+                                       class="table-system__btn table-system__btn--primary">
+                                        <i class="fas fa-edit"></i> Editar
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <!-- Paginação dos resultados -->
+                <div th:if="${usuarios.totalPages > 1}" style="margin-top: 20px; text-align: center;">
+                    <div style="display: inline-flex; gap: 5px;">
+                        <a th:if="${usuarios.hasPrevious()}" 
+                           th:href="@{/admin/usuarios/search(page=${usuarios.number - 1}, tipo=${tipo}, termo=${termo})}"
+                           class="table-system__btn table-system__btn--secondary">Anterior</a>
+                        
+                        <span style="padding: 8px 12px; background: #f8f9fa; border-radius: 4px;">
+                            Página <span th:text="${usuarios.number + 1}">1</span> de <span th:text="${usuarios.totalPages}">1</span>
+                        </span>
+                        
+                        <a th:if="${usuarios.hasNext()}" 
+                           th:href="@{/admin/usuarios/search(page=${usuarios.number + 1}, tipo=${tipo}, termo=${termo})}"
+                           class="table-system__btn table-system__btn--secondary">Próxima</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </th:block>
+</body>
+</html>
