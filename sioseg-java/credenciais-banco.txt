@@ -1,0 +1,19 @@
+CREDENCIAIS DO BANCO (do SQL):
+
+Admin:
+Email: admin@gmail.com
+Senha: (hash no banco, precisa descriptografar)
+
+Funcionário:
+Email: george@gmail.com  
+Senha: (hash no banco, precisa descriptografar)
+
+Técnico:
+Email: amanda@gmail.com
+Senha: (hash no banco, precisa descriptografar)
+
+Email: carlos@gmail.com
+Senha: (hash no banco, precisa descriptografar)
+
+PROBLEMA: As senhas estão com hash PHP ($2y$10$...), mas o Spring usa BCrypt.
+Precisa criar usuários novos ou converter as senhas.

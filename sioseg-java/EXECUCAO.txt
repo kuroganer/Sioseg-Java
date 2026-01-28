@@ -1,0 +1,83 @@
+# Sioseg - Instruções de Execução
+
+## Opções de Execução
+
+### Opção 1: Com MySQL (Produção)
+Se você tem MySQL rodando em localhost:3306:
+
+```bash
+rebuild.bat
+```
+
+**Pré-requisitos:**
+- MySQL 5.7+ rodando
+- Database "sioseg" criado
+- Credenciais corretas em `application.properties`
+
+---
+
+### Opção 2: Com H2 (Desenvolvimento/Testes) - RECOMENDADO
+Para testes rápidos sem MySQL:
+
+```bash
+run-h2.bat
+```
+
+Este script:
+- Compila a aplicação
+- Inicia com banco H2 em memória
+- Sem precisar de MySQL
+
+**Acesso H2 Console:**
+- URL: `http://localhost:8080/h2-console`
+- JDBC URL: `jdbc:h2:mem:sioseg`
+- User: `sa`
+- Password: (deixar em branco)
+
+---
+
+## Endpoints Disponíveis
+
+| URL | Descrição |
+|-----|-----------|
+| `GET /` | Dashboard |
+| `GET /test` | Teste simples (verifica se servidor está rodando) |
+| `GET /login` | Página de login |
+| `GET /h2-console` | Console do banco H2 (apenas com perfil H2) |
+
+---
+
+## Troubleshooting
+
+### "Whitelabel Error Page 500"
+**Causa:** Erro ao processar template ou banco de dados
+
+**Solução:**
+1. Tente usar `run-h2.bat` (sem MySQL)
+2. Se usar MySQL, verifique:
+   - MySQL está rodando: `netstat -an | findstr 3306`
+   - Database existe: `CREATE DATABASE sioseg;`
+   - Credenciais em `application.properties`
+
+### "JAVA_HOME not set"
+```batch
+set JAVA_HOME=%USERPROFILE%\jdk
+```
+
+### "mvn: command not found"
+Verifique se Maven está em: `%USERPROFILE%\tools\maven\bin\mvn.cmd`
+
+---
+
+## Arquivo de Logs
+
+Se quiser ver logs detalhados, edite `application.properties`:
+
+```properties
+logging.level.com.sioseg=DEBUG
+logging.level.org.springframework.web=DEBUG
+```
+
+---
+
+**Última atualização:** 10/12/2025
